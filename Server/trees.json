@@ -1,0 +1,25 @@
+[
+  [
+    {"id" : "A1" , "type" : "actuator", "children" : ["B1"]},
+    {"id" : "B1" , "type" : "block", "parent" : "A1", "children" : ["1" , "2"], "function" : "and"},
+    {"id" : "1" , "type" : "analog sensor", "parent" : "B1"},
+    {"id" : "2" , "type" : "digital sensor", "parent" : "B1"}
+
+  ],
+  [
+    {"id" : "A2" , "type" : "actuator", "children" : ["B2"]},
+    {"id" : "B2" , "type" : "block", "parent" : "A2", "children" : ["B3"], "function" : "not"},
+    {"id" : "B3" , "type" : "block", "parent" : "B2", "children" : ["3" , "2", "4"], "function" : "and"},
+    {"id" : "2" , "type" : "digital sensor", "parent" : "B3"},
+    {"id" : "3" , "type" : "digital sensor", "parent" : "B3"},
+    {"id" : "4" , "type" : "analog sensor", "parent" : "B3"}
+  ],
+  [
+    {"id" : "A3" , "type" : "actuator", "children" : ["B4"]},
+    {"id" : "B4" , "type" : "block", "parent" : "A3", "children" : ["B5", "2"], "function" : "or"},
+    {"id" : "B5" , "type" : "block", "parent" : "B4", "children" : ["3", "4"], "function" : "and"},
+    {"id" : "2" , "type" : "digital sensor", "parent" : "B4"},
+    {"id" : "3" , "type" : "digital sensor", "parent" : "B5"},
+    {"id" : "4" , "type" : "analog sensor", "parent" : "B5"}
+  ]
+]
