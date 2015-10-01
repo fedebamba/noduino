@@ -33,9 +33,9 @@ module.exports.createArduinoServer = function(options){
     arduinoServer = new EventEmitter();
 
     //retrieving json data
-    jsonTreesAsArray = JSON.parse(FS.readFileSync(defaultValue.treesFilename, 'utf8'));
-    jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(defaultValue.sensorsFilename, 'utf8')));
-    trueJsonTrees = createJsonTrees(jsonTreesAsArray);
+    jsonTreesAsArray = JSON.parse(FS.readFileSync(__dirname +"/"+ defaultValue.treesFilename, 'utf8'));
+    jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(__dirname +"/"+defaultValue.sensorsFilename, 'utf8')));
+    trueJsonTrees = createJsonTrees(__dirname +"/"+jsonTreesAsArray);
 
     //init state vector;
     for(var i = 0; i < jsonSensors.length; i++){
