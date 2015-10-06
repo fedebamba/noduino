@@ -1,0 +1,14 @@
+function (){
+        var param = [];
+        for(var i = 0, len = fArray.length; i < len; i++ ){
+            param[i] = fArray[i].apply(this, arguments);
+        }
+        return fn(param);
+    }
+
+control :  id
+setActuator :  id - value
+getActuator :  id
+
+start
+sense

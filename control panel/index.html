@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src= "/socket.io/socket.io.js"></script>
+    <style>
+        *{padding: 0; margin: 0}
+        button{padding: 10px;}
+    </style>
+    <script>
+        var socket = io.connect();
+        socket.on('connected', function(){
+            console.log('ciao');
+            socket.on('setup', function(data){
+                console.log(data.sensor);
+
+                var buttonhtml = '<button id = ' + data.id + ' class = "sensor" onclick="measurement(this)">Sensor: ' + data.tag + '<br>' + data.com + '  pin: ' + data.pin +'</button>';
+                var div = document.createElement('div');
+                div.innerHTML = buttonhtml;
+                document.getElementById('sensor-list').appendChild(div);
+            });
+
+            socket.on('setActuator', function(data){
+                console.log('setting actuator :' + data.id + '  at : ' + data.value);
+
+                var act = document.getElementById(data.id);
+                if(data.value == true){
+                    act.style.backgroundColor = 'blue';
+                }
+                else{
+                    act.style.backgroundColor = 'red';
+                }
+            });
+            socket.on('getActuator', function(data){
+                var buttonhtml = '<button id = ' + data.actuator + ' class = "actuator">Actuator: ' + data.actuator +'</button>';
+
+                var div = document.createElement('div');
+                div.innerHTML = buttonhtml;
+                document.getElementById('actuator-list').appendChild(div);
+            });
+
+            socket.emit('start');
+        });
+
+
+        function addSensor(element){
+            console.log('culo');
+
+            element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
+            console.log(element.id);
+        }
+
+        function measurement(element){
+            console.log('cazzo');
+
+            element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
+            socket.emit('measure', {id : element.id, value : element.style.backgroundColor == 'red' ? 0 : 1 });
+            console.log(element.id);
+        };
+    </script>
+
+</head>
+
+
+<body>
+    <h1>Pannello di controllo per noduino</h1>
+    <ul id = "sensor-list"><button onclick="addSensor(this)"></button></ul>
+    <div id = 'actuator-list' style="float: right"></div>
+</body>
+</html>

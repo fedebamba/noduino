@@ -33,8 +33,8 @@ module.exports.createArduinoServer = function(options){
     arduinoServer = new EventEmitter();
 
     //retrieving json data
-    jsonTreesAsArray = JSON.parse(FS.readFileSync(defaultValue.treesFilename, 'utf8'));
-    jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(defaultValue.sensorsFilename, 'utf8')));
+    jsonTreesAsArray = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.treesFilename, 'utf8'));
+    jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.sensorsFilename, 'utf8')));
     trueJsonTrees = createJsonTrees(jsonTreesAsArray);
 
     //init state vector;
@@ -47,7 +47,7 @@ module.exports.createArduinoServer = function(options){
 
     //generating actuator control routines;
     for(var i = 0; i < trueJsonTrees.length; i++){
-        functionVector[i] = {"id" : trueJsonTrees[i].id, "controlRoutine" : eval(stringFromRoot(trueJsonTrees[i]))};
+        functionVector[i] = {"id" : trueJsonTrees[i].id, "controlRoutine" : treeVisit(trueJsonTrees[i])(trueJsonTrees[i])};
     }
 
     //attaching events;
@@ -65,6 +65,9 @@ function startConnection(){
     for(var i = 0; i < jsonSensors.length; i++){
         arduinoServer.emit('control', {"sensor" : jsonSensors[i].id});
     }
+    for (var j = 0; j < trueJsonTrees.length; j++){
+        arduinoServer.emit('getActuator' , {actuator : trueJsonTrees[j].id});
+    }
 
     //todo : continue
 }
@@ -79,7 +82,8 @@ function onSense(measure){
             return true;
         }
     });
-
+    console.log(sensorStateVector);
+    console.log(actuatorStateVector);
     //find actuators that depends from sensed sensor
     var potentiallyVariatedActuators = [];
     jsonSensors.some(function(element){
@@ -88,17 +92,23 @@ function onSense(measure){
             return true;
         }
     });
-
     //begin control routine for each selected actuator and emit command
     for (var j = 0; j < potentiallyVariatedActuators.length; j++){
         for(var k = 0; k < functionVector.length; k++){
             if(functionVector[k].id == potentiallyVariatedActuators[j].id){
-                console.log('ok + ' + functionVector[k]);
-                var result = functionVector[k].controlRoutine();
+                var result;
+                trueJsonTrees.some(function(element){
+                    if(element.id == functionVector[k].id){
+                        result = treeVisit(element.children[0]);
+                        return true;
+                    }
+                });
+
                 for (var index = 0; index < actuatorStateVector.length; index++){
                     if ((actuatorStateVector[index].actuatorId == functionVector[k].id) &&(result != actuatorStateVector[index].actuatorValue)){
                         arduinoServer.emit('setActuator', {"id" : actuatorStateVector[index].actuatorId, "value" : result});
-                        actuatorStateVector[index] = result;
+                        actuatorStateVector[index].actuatorValue = result;
+                        console.log(result);
                     }
                 }
             }
@@ -120,6 +130,7 @@ function createJsonTrees(){
         }
         function createASingleTree(jsonArray, jsonTreeNode){
             var jsonNode = jsonTreeNode;
+
             if (jsonNode.children != undefined){
                 for(var i = 0; i < jsonNode.children.length; i++){
                     for (var j = 0; j < jsonArray.length; j++){
@@ -129,17 +140,44 @@ function createJsonTrees(){
                     }
                 }
             }
+
+            //find function
+            if(jsonNode.function != undefined){
+                jsonNode.function = eval('functions.' + jsonNode.function);
+            }
+            else if(jsonNode.type.indexOf('sensor') > -1){
+                jsonNode.function = function(node){
+                    var id = node.id;
+                    console.log('state :  ' + id );
+
+                    var itr = NaN;
+                    sensorStateVector.some(function(element){
+                        if(element.sensorId == id){
+                            itr = element.sensorValue;
+                            return true;
+                        }
+                    });
+                    console.log('state :  '+sensorStateVector[id]);
+                    return itr;
+                };
+            }
+            else if(jsonNode.type.indexOf('actuator') > -1){
+                jsonNode.function = function(){
+                    var child = jsonNode.children[0];
+                    return child.function;
+                };
+            }
             return jsonNode;
         }
         return createASingleTree(jsonArray, jsonArray[i]);
     }
+
     return tmpJsonTrees;
 }
 
 function createActuatorReferenceMap(tmpJsonSensors){
     var jsonSensorResult = [];
     for (var i = 0; i < tmpJsonSensors.length; i++){
-        console.log(jsonTreesAsArray.length);
         jsonSensorResult[i] = {id : tmpJsonSensors[i].id, tag : tmpJsonSensors[i].tag, actuators : []};
         for (var j = 0; j < jsonTreesAsArray.length; j++){
             for (var k = 0; k < jsonTreesAsArray[j].length; k++){
@@ -152,24 +190,19 @@ function createActuatorReferenceMap(tmpJsonSensors){
     return jsonSensorResult;
 }
 
-function createComSet(){
-    var comSet = [];
-    for(var i = 0; i < jsonSensors.length; i++){
-        var newCom = true;
-        for (var j = 0; j < comSet.length; j++){
-            if(typeof comSet[j] != 'undefined' && typeof comSet[j].COM != 'undefined' ){
-                if (comSet[j].COM == jsonSensors[i].COM){
-                    newCom = false;
-                    comSet[j].sensors[comSet[j].sensors.length] = jsonSensors[i].id;
-                }
-            }
+function treeVisit(node){
+    if(node.children != undefined && node.children.length > 0){
+        var param = [];
+        for (var i = 0; i < node.children.length; i++){
+            param[i] = treeVisit(node.children[i]);
         }
-        if(newCom){
-            comSet[comSet.length] = {"COM" : jsonSensors[i].COM, "sensors" : [jsonSensors[i].id]};
-        }
+        return node.function(param);
     }
-    return comSet;
+    else{
+        return node.function(node);
+    }
 }
+
 
 //various utility functions---------------------------------------------------------------------------------------------
 function stringFromRoot(root){
@@ -194,6 +227,7 @@ function stringFromRoot(root){
         }
         return string;
     }
+    FS.writeFileSync('culo.txt', string + '\n\n');
     return string;
 }
 
@@ -207,13 +241,27 @@ Array.prototype.contains = function(obj){
     return result;
 }
 
-Function.prototype.treeLikeCompose = function(fArray){
+Function.prototype.treeLikeCompose = function(fArray) {
     var fn = this;
-    return function(){
+    return function () {
         var param = [];
-        for(var i = 0, len = fArray.length; i < len; i++ ){
+        for (var i = 0, len = fArray.length; i < len; i++) {
             param[i] = fArray[i].apply(this, arguments);
         }
         return fn(param);
-    }
-}
+    };
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
