@@ -1,0 +1,12 @@
+[
+  {"name" : "and", "descr" : "And logico tra due ingressi", "param" : 2},
+  {"name" : "or", "descr" : "Or logico tra due ingressi", "param" : 2},
+  {"name" : "not", "descr" : "Not logico dell'ingresso", "param" : 1},
+  {"name" : "transistor", "descr" : "Restituisce il valore del secondo ingresso se il primo risulta diverso da 0, e 0 altrimenti", "param" : 2},
+  {"name" : "greaterThan", "descr" : "Restituisce true se il primo ingresso risulta strettamente maggiore del secondo", "param" : 2},
+  {"name" : "lesserThan", "descr" : "Restituisce true se il primo ingresso risulta strettamente minore del secondo", "param" : 2}
+  {"name" : "min", "descr" : "Restituisce il minimo tra gli ingressi", "param" : 2},
+  {"name" : "max", "descr" : "Restituisce il massimo tra gli ingressi", "param" : 2},
+  {"name" : "threshold", "descr" : "Restituisce 1 se l'ingresso è maggiore della soglia, 0 altrimenti", "param" : 1}
+]
+

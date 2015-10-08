@@ -12,3 +12,30 @@ getActuator :  id
 
 start
 sense
+
+
+
+---------------------------------------------
+|                                           |
+|           PROTOCOLLO DI TREVI             |
+|                                           |
+---------------------------------------------
+
+
+
+
+-Dichiarazione di attuatore (digitale)  @att:[pin]#
+
+ Dichiarazione di attuatore analogico   @ata:[pin]#
+
+ Dichiarazione di arruatore servo;      @ser:[pin]#
+
+ Dichiarazione di sensore               @sen:[pin]#
+
+ @prq#
+
+
+ Settaggio attuatore (digitale)         @sda:[pin]:[binary-value]#
+
+ Settaggio attuatore  analogico         @sda:[pin]:[integer-value]#
+

@@ -225,7 +225,6 @@ function stringFromRoot(root){
         }
         return string;
     }
-    FS.writeFileSync('culo.txt', string + '\n\n');
     return string;
 }
 
