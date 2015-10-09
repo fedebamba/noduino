@@ -32,7 +32,7 @@ sense
 
  Dichiarazione di sensore               @sen:[pin]#
 
- @prq#
+ Richiesta dei pin in uso               @prq#
 
 
  Settaggio attuatore (digitale)         @sda:[pin]:[binary-value]#

@@ -1,8 +1,7 @@
 [
   [
-    {"id" : "0", "type" : "sensor", "parent" : "2"},
-    {"id" : "1", "type" : "sensor", "parent" : "2"},
-    {"id" : "2" , "type" : "block", "parent" : "3", "children" : ["0" , "1"], "function" : "and"},
-    {"id" : "3" , "type" : "actuator", "children" : ["2"]}
+    {"id" : "6", "type" : "actuator", "children" : ["7"]},
+    {"id" : "7", "type" : "block", "parent" : "6" , "children" : ["0"], "function" : "divideByTen"},
+    {"id" : "0" , "type" : "sensor", "parent" : "7"}
   ]
 ]
