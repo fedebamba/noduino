@@ -145,7 +145,7 @@ function createJsonTrees(){
             if(jsonNode.function != undefined){
                 jsonNode.function = eval('functions.' + jsonNode.function);
             }
-            else if(jsonNode.type.indexOf('sensor') > -1){
+            else if(jsonNode.type.indexOf('SENS') > -1){
                 jsonNode.function = function(node){
                     var id = node.id;
                     var itr = NaN;
@@ -159,7 +159,7 @@ function createJsonTrees(){
                     return itr;
                 };
             }
-            else if(jsonNode.type.indexOf('actuator') > -1){
+            else if(jsonNode.type.indexOf('ACTU') > -1){
                 jsonNode.function = function(){
                     var child = jsonNode.children[0];
                     return child.function;
@@ -209,14 +209,14 @@ function stringFromRoot(root){
     function buildStringFunction(node){
         var string  = '';
         if(node.children != undefined && node.children.length > 0){
-            if(node.type.indexOf('block') > -1){
+            if(node.type.indexOf('BLOC') > -1){
                 string = 'functions.' + node.function + '.treeLikeCompose([';
             }
             for (var i = 0; i < node.children.length; i++){
                 string = string + buildStringFunction(node.children[i]) + ', ';
             }
             string = string.slice(0, -2);
-            if(node.type.indexOf('block') > -1){
+            if(node.type.indexOf('BLOC') > -1){
                 string += '])';
             }
         }
