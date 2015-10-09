@@ -236,7 +236,7 @@ Array.prototype.contains = function(obj){
             result =true;
     }
     return result;
-}
+};
 
 Function.prototype.treeLikeCompose = function(fArray) {
     var fn = this;
@@ -248,17 +248,3 @@ Function.prototype.treeLikeCompose = function(fArray) {
         return fn(param);
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-

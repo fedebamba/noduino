@@ -31,6 +31,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="arduinoserver.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/arduinoserver.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.2068965">
+              <caret line="238" column="2" selection-start-line="238" selection-start-column="2" selection-end-line="238" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="sensors.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/jsons/sensors.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -44,18 +54,18 @@
       <file leaf-file-name="trees.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/jsons/trees.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="3" column="97" selection-start-line="3" selection-start-column="97" selection-end-line="3" selection-end-column="97" />
+            <state vertical-scroll-proportion="-4.576923">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serialserver.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="serialserver.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bin/serial/serialserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.2413793">
-              <caret line="176" column="19" selection-start-line="176" selection-start-column="17" selection-end-line="176" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.042606518">
+              <caret line="70" column="3" selection-start-line="70" selection-start-column="3" selection-end-line="70" selection-end-column="3" />
               <folding>
                 <element signature="e#5430#5829#0" expanded="false" />
               </folding>
@@ -63,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/control panel/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-2.3448277">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -93,11 +103,11 @@
         <option value="$PROJECT_DIR$/bin/jsons/PROVA.js" />
         <option value="$PROJECT_DIR$/bin/control panel/culo.txt" />
         <option value="$PROJECT_DIR$/bin/function.json" />
-        <option value="$PROJECT_DIR$/bin/jsons/trees.json" />
         <option value="$PROJECT_DIR$/bin/jsons/actuators.json" />
         <option value="$PROJECT_DIR$/bin/jsons/sensors.json" />
         <option value="$PROJECT_DIR$/bin/serial/serialserver.js" />
         <option value="$PROJECT_DIR$/bin/functions.js" />
+        <option value="$PROJECT_DIR$/bin/jsons/trees.json" />
         <option value="$PROJECT_DIR$/bin/arduinoserver.js" />
       </list>
     </option>
@@ -697,10 +707,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/arduinoserver.js">
+    <entry file="file://$PROJECT_DIR$/bin/functions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33243242">
-          <caret line="23" column="33" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.7443609">
+          <caret line="83" column="6" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/control panel/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.3448277">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -713,6 +731,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bin/jsons/trees.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.576923">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bin/jsons/sensors.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.038462">
@@ -721,37 +747,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/functions.js">
+    <entry file="file://$PROJECT_DIR$/bin/arduinoserver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7443609">
-          <caret line="83" column="6" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/jsons/trees.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9615384">
-          <caret line="3" column="97" selection-start-line="3" selection-start-column="97" selection-end-line="3" selection-end-column="97" />
+        <state vertical-scroll-proportion="-2.2068965">
+          <caret line="238" column="2" selection-start-line="238" selection-start-column="2" selection-end-line="238" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/serial/serialserver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.2413793">
-          <caret line="176" column="19" selection-start-line="176" selection-start-column="17" selection-end-line="176" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.042606518">
+          <caret line="70" column="3" selection-start-line="70" selection-start-column="3" selection-end-line="70" selection-end-column="3" />
           <folding>
             <element signature="e#5430#5829#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/control panel/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,7 @@
 [
   [
-    {"id" : "6", "type" : "actuator", "children" : ["7"]},
-    {"id" : "7", "type" : "block", "parent" : "6" , "children" : ["0"], "function" : "divideByTen"},
-    {"id" : "0" , "type" : "sensor", "parent" : "7"}
+    {"id" : "6", "type" : "ACTU", "children" : ["7"]},
+    {"id" : "7", "type" : "BLOC", "parent" : "6" , "children" : ["0"], "function" : "divideByTen"},
+    {"id" : "0" , "type" : "SENS", "parent" : "7"}
   ]
 ]
