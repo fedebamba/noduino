@@ -79,6 +79,10 @@ module.exports = {
             return 0;
         }
         return parameter[0] > value;
+    },
+
+    divideByTen : function(parameter){
+        return Math.floor(parameter[0] / 10);
     }
 
 };

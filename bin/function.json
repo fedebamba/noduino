@@ -8,5 +8,6 @@
   {"name" : "min", "descr" : "Restituisce il minimo tra gli ingressi", "param" : 2},
   {"name" : "max", "descr" : "Restituisce il massimo tra gli ingressi", "param" : 2},
   {"name" : "threshold", "descr" : "Restituisce 1 se l'ingresso è maggiore della soglia, 0 altrimenti", "param" : 1}
+  {"name" : "divideByTen", "param" : 1 }
 ]
 

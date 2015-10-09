@@ -52,11 +52,11 @@ serials.forEach(function(port) {
                 switch (command) {
                     case 'get': //sense case
                         arduinoServer.emit('sense',{
-                            id : findCom(jsonSensors, {
+                            id : findIdFromCom(jsonSensors, {
                                 pin : parseInt(string.substr(5,2)),
-                                COM : this.port.comName
+                                COM : port.name
                             }),
-                            value : parseInt(string.substr(7, 3))
+                            value : parseInt(string.substr(8, 3))
                         });
                         break;
                     case 'ack':
@@ -75,11 +75,43 @@ arduinoServer.on('setActuator', onSetActuator);
 
 arduinoServer.emit('start');
 
-function onSetActuator(data){
-    findPort(jsonActuators, data, function(chunk){
-        return '@set:' + chunk.pin.toString() + chunk.data.value.toString() + '#';
+function onSetActuator(data) {
+    console.log(data );
+    jsonActuators.some(function (element) {
+
+        if (element.id == data.id) {
+            serials.some(function (el) {
+                if (el.name == element.COM) {
+                    var string = '@saa:';
+                    string += element.pin < 10 ? '0' + element.pin : element.pin;
+                    if (data.value < 10) {
+                        string += ':00' + data.value + '#';
+                    }
+                    else if (data.value < 100) {
+                        string += ':0' + data.value + '#';
+                    }
+                    else {
+                        string += ':' + data.value + '#';
+                    }
+                    if (el.port.isOpen()) {
+                        el.port.write(string);
+                        console.log(string);
+                    }
+                    else {
+                        culo.on('setupArduino' + el.name, function () {
+                            setTimeout(function () {
+                                el.port.write(string);
+                            }, 2000);
+                        });
+                    }
+                    return true;
+                }
+            });
+            return true;
+        }
     });
 }
+
 
 function onControl(data){
     jsonSensors.some(function(element){
@@ -87,15 +119,17 @@ function onControl(data){
                 serials.some(function(el){
                     if(el.name == element.COM){
                         if (el.port.isOpen()){
-                            el.port.write('@sen:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#');
+                            el.port.write('@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
+                            el.port.write('@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#');
                         }
                         else{
                             console.log('culo2');
                             culo.on('setupArduino' + el.name, function(){
-                                setTimeout(function(){var string = '@sen:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#';
+                                setTimeout(function(){var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
                                     console.log('setting at:' + string);
-                                    el.port.write(string);}, 2000);
+                                    el.port.write(string);
+                                }, 2000);
                             });
                         }
 
@@ -109,19 +143,21 @@ function onControl(data){
 
 //todo: rifare
 function onStopControl(data){
-    findPort(jsonSensors, data, function(chunk){
-        return '@stp:' + chunk.pin.toString() + '#';
-    });
-}
-
-//todo: add this in arduino protocol
-function onGetSensor(data){
-    findPort(jsonSensors, data, function(chunk){
-        return '@g' + chunk.pin.toString() + '#';
+    jsonSensors.some(function(element){
+        if(element.id == data.sensor){
+            serials.some(function(el){
+                if(el.name == element.COM){
+                    el.port.write('@stp:' + (element.pin < 10 ?  '0' + element.pin : element.pin) +'#' );
+                    return true;
+                }
+            });
+            return true
+        }
     });
 }
 
 //todo: togliere completamente la funzione
+/*
 function findPort(jsonVector, data, callback){
     jsonVector.some(function(element){
         if(element.id == data.id){
@@ -134,10 +170,10 @@ function findPort(jsonVector, data, callback){
             return true
         }
     });
-
 }
+*/
 
-function findCom(jsonVector, data){
+function findIdFromCom(jsonVector, data){
     var result = '';
     jsonVector.some(function (element) {
         if(element.COM == data.COM && element.pin == data.pin){
@@ -147,39 +183,3 @@ function findCom(jsonVector, data){
     });
     return result;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-*
-*
-*
-*
-* */
