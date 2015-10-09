@@ -82,7 +82,7 @@ function onSense(measure){
             return true;
         }
     });
-    console.log(sensorStateVector);
+     console.log(sensorStateVector);
     console.log(actuatorStateVector);
     //find actuators that depends from sensed sensor
     var potentiallyVariatedActuators = [];

@@ -52,12 +52,11 @@ serials.forEach(function(port) {
                 switch (command) {
                     case 'get': //sense case
                         arduinoServer.emit('sense',{
-                            id : findCom(jsonSensors, {
+                            id : findIdFromCom(jsonSensors, {
                                 pin : parseInt(string.substr(5,2)),
-                                COM : port.name,
-                                value : parseInt(string.substr(8,3))
+                                COM : port.name
                             }),
-                            value : parseInt(string.substr(7, 3))
+                            value : parseInt(string.substr(8, 3))
                         });
                         break;
                     case 'ack':
@@ -77,8 +76,10 @@ arduinoServer.on('setActuator', onSetActuator);
 arduinoServer.emit('start');
 
 function onSetActuator(data) {
+    console.log(data );
     jsonActuators.some(function (element) {
-        if (element.id == data.actuator) {
+
+        if (element.id == data.id) {
             serials.some(function (el) {
                 if (el.name == element.COM) {
                     var string = '@saa:';
@@ -92,9 +93,9 @@ function onSetActuator(data) {
                     else {
                         string += ':' + data.value + '#';
                     }
-                    return string;
                     if (el.port.isOpen()) {
                         el.port.write(string);
+                        console.log(string);
                     }
                     else {
                         culo.on('setupArduino' + el.name, function () {
@@ -103,11 +104,11 @@ function onSetActuator(data) {
                             }, 2000);
                         });
                     }
+                    return true;
                 }
-                return true;
             });
+            return true;
         }
-        return true;
     });
 }
 
@@ -124,7 +125,7 @@ function onControl(data){
                         else{
                             console.log('culo2');
                             culo.on('setupArduino' + el.name, function(){
-                                setTimeout(function(){var string = '@sen:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'     ;
+                                setTimeout(function(){var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
                                     console.log('setting at:' + string);
                                     el.port.write(string);
@@ -172,7 +173,7 @@ function findPort(jsonVector, data, callback){
 }
 */
 
-function findCom(jsonVector, data){
+function findIdFromCom(jsonVector, data){
     var result = '';
     jsonVector.some(function (element) {
         if(element.COM == data.COM && element.pin == data.pin){
