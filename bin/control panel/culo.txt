@@ -12,7 +12,7 @@ getActuator :  id
 
 start
 sense
-
+setup
 
 
 ---------------------------------------------

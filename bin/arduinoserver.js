@@ -53,6 +53,7 @@ module.exports.createArduinoServer = function(options){
     //attaching events;
     arduinoServer.on('start', function(){
         arduinoServer.on('sense', onSense);
+        arduinoServer.on('setup', onSetup);
         startConnection();
     });
 
@@ -62,14 +63,20 @@ module.exports.createArduinoServer = function(options){
 
 //event listener definition---------------------------------------------------------------------------------------------
 function startConnection(){
+    console.log('Starting network setup...');
+    onSetup();
+    //todo : continue
+    console.log('Network setup Started');
+}
+
+function onSetup(){
+    console.log('               -------------------------');
     for(var i = 0; i < jsonSensors.length; i++){
         arduinoServer.emit('control', {"sensor" : jsonSensors[i].id});
     }
     for (var j = 0; j < trueJsonTrees.length; j++){
         arduinoServer.emit('getActuator' , {actuator : trueJsonTrees[j].id});
     }
-
-    //todo : continue
 }
 
 function onSense(measure){

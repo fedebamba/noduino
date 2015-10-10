@@ -11,7 +11,7 @@
         socket.on('connected', function(){
             console.log('ciao');
             socket.on('setup', function(data){
-                console.log(data.sensor);
+                console.log(data.id);
 
                 var buttonhtml = '<button id = ' + data.id + ' class = "sensor" onclick="measurement(this)">Sensor: ' + data.tag + '<br>' + data.com + '  pin: ' + data.pin +'</button>';
                 var div = document.createElement('div');
@@ -43,7 +43,7 @@
 
 
         function addSensor(element){
-            console.log('culo');
+            console.log('event');
 
             element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
             console.log(element.id);
