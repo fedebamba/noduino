@@ -80,7 +80,7 @@ function onSetup(){
 }
 
 function onSense(measure){
-    //console.log('sensor: ' + measure.id + 'measures:  ' + measure.value);
+    //console.log('sensor: ' + measure.id + ' measures:  ' + measure.value);
 
     //update sensor state vector;
     sensorStateVector.some(function(element){
@@ -89,13 +89,17 @@ function onSense(measure){
             return true;
         }
     });
-     console.log(sensorStateVector);
+    console.log(sensorStateVector);
     console.log(actuatorStateVector);
     //find actuators that depends from sensed sensor
     var potentiallyVariatedActuators = [];
     jsonSensors.some(function(element){
+        console.log(element.id + ' ,  ' + measure.id);
+
         if(element.id == measure.id){
+            console.log('                                      ' + element.actuators);
             potentiallyVariatedActuators = element.actuators;
+            console.log('actuators: ' + element.actuators);
             return true;
         }
     });
@@ -106,13 +110,14 @@ function onSense(measure){
                 var result;
                 trueJsonTrees.some(function(element){
                     if(element.id == functionVector[k].id){
+                        //console.log('treevisit :' + treeVisit(element.children[0]   ));
                         result = treeVisit(element.children[0]);
                         return true;
                     }
                 });
 
                 for (var index = 0; index < actuatorStateVector.length; index++){
-                    if ((actuatorStateVector[index].actuatorId == functionVector[k].id) &&(result != actuatorStateVector[index].actuatorValue)){
+                    if ((actuatorStateVector[index].actuatorId == functionVector[k].id)){
                         arduinoServer.emit('setActuator', {"id" : actuatorStateVector[index].actuatorId, "value" : result});
                         actuatorStateVector[index].actuatorValue = result;
                         console.log(result);
@@ -186,7 +191,7 @@ function createActuatorReferenceMap(tmpJsonSensors){
         jsonSensorResult[i] = {id : tmpJsonSensors[i].id, tag : tmpJsonSensors[i].tag, actuators : []};
         for (var j = 0; j < jsonTreesAsArray.length; j++){
             for (var k = 0; k < jsonTreesAsArray[j].length; k++){
-                if (jsonTreesAsArray[j][k].type == "actuator" && tmpJsonSensors[i].actuators.contains(jsonTreesAsArray[j][k].id)){
+                if (jsonTreesAsArray[j][k].type == "ACTU" && tmpJsonSensors[i].actuators.contains(jsonTreesAsArray[j][k].id)){
                     jsonSensorResult[i].actuators[jsonSensorResult[i].actuators.length] = jsonTreesAsArray[j][k];
                 }
             }

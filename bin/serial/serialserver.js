@@ -67,7 +67,7 @@ module.exports.start = function(arduinoServer, finisher){
                             break;
                     }
                 });
-                arduinoServer.emit('setup');
+                setTimeout(function(){arduinoServer.emit('setup');}, 500);
             }
             console.log('t');
             counter++;

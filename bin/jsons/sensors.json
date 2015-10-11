@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "COM": "COM5",
+    "COM": "COM3",
     "pin": 0,
     "name": "analog sensor",
     "actuators": [
@@ -11,7 +11,7 @@
   },
   {
     "id": 1,
-    "COM": "COM5",
+    "COM": "COM3",
     "pin": 1,
     "name": "analog sensor",
     "actuators": [
