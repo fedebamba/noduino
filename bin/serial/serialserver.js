@@ -8,8 +8,23 @@ var EventEmitter = require('events').EventEmitter;
 //var arduinoServer = require('../arduinoserver.js').createArduinoServer(false);
 var event = new EventEmitter();
 
-var jsonSensors = JSON.parse(fs.readFileSync(__dirname + '/../jsons/sensors.json'));
-var jsonActuators = JSON.parse(fs.readFileSync(__dirname + '/../jsons/actuators.json'));
+
+var jsonSensors = [];
+var jsonActuators = [];
+
+
+JSON.parse(fs.readFileSync(__dirname + '/../jsons/sensors.json')).forEach(function(element){
+    if(element.desc != undefined && element.desc.indexOf('VIRTUAL') == -1){
+        jsonSensors[jsonSensors.length] = element;
+    }
+});
+JSON.parse(fs.readFileSync(__dirname + '/../jsons/actuators.json')).forEach(function(element){
+    if(element.desc != undefined && element.desc.indexOf('VIRTUAL') == -1){
+        jsonActuators[jsonActuators.length] = element;
+    }
+});
+
+
 
 var serials = [];
 
@@ -94,17 +109,26 @@ function onSetActuator(data) {
         if (element.id == data.id) {
             serials.some(function (el) {
                 if (el.name == element.COM) {
-                    var string = '@saa:';
-                    string += element.pin < 10 ? '0' + element.pin : element.pin;
-                    if (data.value < 10) {
-                        string += ':00' + data.value + '#';
+                    var string;
+                    if(element.desc.indexOf('ANALOG') > -1){
+                        string = '@saa:';
+                        string += element.pin < 10 ? '0' + element.pin : element.pin;
+                        if (data.value < 10) {
+                            string += ':00' + data.value + '#';
+                        }
+                        else if (data.value < 100) {
+                            string += ':0' + data.value + '#';
+                        }
+                        else {
+                            string += ':' + data.value + '#';
+                        }
                     }
-                    else if (data.value < 100) {
-                        string += ':0' + data.value + '#';
+                    else if(element.desc.indexOf('DIGITAL') > -1){
+                        string = '@sda:';
+                        string += element.pin < 10 ? '0' + element.pin : element.pin;
+                        string += data.value ? ':1#' : ':0#';
                     }
-                    else {
-                        string += ':' + data.value + '#';
-                    }
+
                     el.port.write(string);
                     console.log(string);
                     return true;
@@ -126,7 +150,7 @@ function onControl(data){
                         el.port.write('@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#');
                     }
                     else{
-                        console.log('culo2');
+                        //console.log('culo2');
                         event.on('setupArduino' + el.name, function(){
                             setTimeout(function(){var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
                                 //console.log('culo3' + el.name);

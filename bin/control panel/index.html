@@ -36,11 +36,10 @@
             socket.emit('start');
         });
 
-
         function addSensor(element){
             console.log('event');
 
-            element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
+            //element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
             console.log(element.id);
         }
 
@@ -58,7 +57,7 @@
 
 <body>
     <h1>Pannello di controllo per noduino</h1>
-    <ul id = "sensor-list"><button onclick="addSensor(this)"></button></ul>
+    <!--<ul id = "sensor-list"><button onclick="addSensor(this)"></button></ul> -->
     <div id = 'actuator-list' style="float: right"></div>
 </body>
 </html>

@@ -22,6 +22,7 @@ module.exports.createArduinoServer = function(options){
     //set default values
     var defaultValue = {
         sensorsFilename : 'sensors.json',
+        actuatorsFilename : 'actuators.json',
         treesFilename : 'trees.json',
         functionsFilename : 'functions.js'
     };
@@ -35,14 +36,15 @@ module.exports.createArduinoServer = function(options){
     //retrieving json data
     jsonTreesAsArray = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.treesFilename, 'utf8'));
     jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.sensorsFilename, 'utf8')));
+    jsonActuators = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.actuatorsFilename, 'utf8'));
     trueJsonTrees = createJsonTrees(jsonTreesAsArray);
 
     //init state vector;
     for(var i = 0; i < jsonSensors.length; i++){
         sensorStateVector[i] = {"sensorId" : jsonSensors[i].id, "sensorValue" : NaN};
     }
-    for(var i = 0; i < trueJsonTrees.length; i++) {
-        actuatorStateVector[i] = {"actuatorId": trueJsonTrees[i].id, "actuatorValue": NaN};
+    for(var i = 0; i < jsonActuators.length; i++) {
+        actuatorStateVector[i] = {"actuatorId": jsonActuators[i].id, "actuatorValue": NaN};
     }
 
     //generating actuator control routines;
@@ -70,7 +72,7 @@ function startConnection(){
 }
 
 function onSetup(){
-    console.log('               -------------------------');
+    //console.log('               -------------------------');
     for(var i = 0; i < jsonSensors.length; i++){
         arduinoServer.emit('control', {"sensor" : jsonSensors[i].id});
     }
