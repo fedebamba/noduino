@@ -36,7 +36,7 @@ module.exports.createArduinoServer = function(options){
     //retrieving json data
     jsonTreesAsArray = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.treesFilename, 'utf8'));
     jsonSensors = createActuatorReferenceMap(JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.sensorsFilename, 'utf8')));
-    jsonActuators = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.actuatorsFilename, 'utf8'));
+    var jsonActuators = JSON.parse(FS.readFileSync(__dirname + '/jsons/' + defaultValue.actuatorsFilename, 'utf8'));
     trueJsonTrees = createJsonTrees(jsonTreesAsArray);
 
     //init state vector;
@@ -59,6 +59,7 @@ module.exports.createArduinoServer = function(options){
         startConnection();
     });
 
+    console.log(actuatorStateVector);
     return arduinoServer;
 };
 

@@ -15,7 +15,7 @@
 
                 var buttonhtml = '<button id = ' + data.id + ' class = "sensor" onclick="measurement(this)">Sensor: ' + data.tag + '<br>' + data.com + '  pin: ' + data.pin +'</button>';
                 var div = document.createElement('div');
-                div.innerHTML = buttonhtml;
+                    div.innerHTML = buttonhtml;
                 document.getElementById('sensor-list').appendChild(div);
             });
 
