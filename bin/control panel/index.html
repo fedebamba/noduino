@@ -11,11 +11,11 @@
         socket.on('connected', function(){
             console.log('ciao');
             socket.on('setup', function(data){
-                console.log(data.sensor);
+                console.log(data.id);
 
                 var buttonhtml = '<button id = ' + data.id + ' class = "sensor" onclick="measurement(this)">Sensor: ' + data.tag + '<br>' + data.com + '  pin: ' + data.pin +'</button>';
                 var div = document.createElement('div');
-                div.innerHTML = buttonhtml;
+                    div.innerHTML = buttonhtml;
                 document.getElementById('sensor-list').appendChild(div);
             });
 
@@ -23,15 +23,10 @@
                 console.log('setting actuator :' + data.id + '  at : ' + data.value);
 
                 var act = document.getElementById(data.id);
-                if(data.value == true){
-                    act.style.backgroundColor = 'blue';
-                }
-                else{
-                    act.style.backgroundColor = 'red';
-                }
+                act.style.width = (data.value + 'px');
             });
             socket.on('getActuator', function(data){
-                var buttonhtml = '<button id = ' + data.actuator + ' class = "actuator">Actuator: ' + data.actuator +'</button>';
+                var buttonhtml = '<button  id = ' + data.actuator + ' class = "actuator">Actuator: ' + data.actuator +'</button>';
 
                 var div = document.createElement('div');
                 div.innerHTML = buttonhtml;
@@ -41,11 +36,10 @@
             socket.emit('start');
         });
 
-
         function addSensor(element){
-            console.log('culo');
+            console.log('event');
 
-            element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
+            //element.style.backgroundColor = element.style.backgroundColor == 'red' ? 'green' : 'red';
             console.log(element.id);
         }
 
@@ -63,7 +57,7 @@
 
 <body>
     <h1>Pannello di controllo per noduino</h1>
-    <ul id = "sensor-list"><button onclick="addSensor(this)"></button></ul>
+    <!--<ul id = "sensor-list"><button onclick="addSensor(this)"></button></ul> -->
     <div id = 'actuator-list' style="float: right"></div>
 </body>
 </html>

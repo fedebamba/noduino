@@ -12,7 +12,7 @@ getActuator :  id
 
 start
 sense
-
+setup
 
 
 ---------------------------------------------
@@ -37,5 +37,5 @@ sense
 
  Settaggio attuatore (digitale)         @sda:[pin]:[binary-value]#
 
- Settaggio attuatore  analogico         @sda:[pin]:[integer-value]#
+ Settaggio attuatore  analogico         @saa:[pin]:[integer-value]#
 

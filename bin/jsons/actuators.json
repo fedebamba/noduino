@@ -1,7 +1,7 @@
 [
-  {"id" : "2" , "tag" : "led_rosso" ,"COM" : "COM5" , "pin" : "9"},
-  {"id" : "3" , "tag" : "led_rosso" ,"COM" : "COM5" , "pin" : "11"},
-  {"id" : "4" , "tag" : "led_rosso" ,"COM" : "COM5" , "pin" : "10"},
-  {"id" : "5" , "tag" : "led_rosso" ,"COM" : "COM5" , "pin" : "5"},
-  {"id" : "6" , "tag" : "led_rosso" ,"COM" : "COM5" , "pin" : "8"}
+  {"id" : "2" , "tag" : "led_rosso" ,"COM" : "COM3" , "pin" : "9"},
+  {"id" : "3" , "tag" : "led_rosso" ,"COM" : "COM3" , "pin" : "11"},
+  {"id" : "4" , "tag" : "led_rosso" ,"COM" : "COM3" , "pin" : "10"},
+  {"id" : "5" , "tag" : "led_rosso" ,"COM" : "COM3" , "pin" : "5"},
+  {"id" : "6" , "tag" : "led_rosso" ,"COM" : "COM3" , "pin" : "8"}
 ]
