@@ -145,20 +145,40 @@ function onControl(data){
         if(element.id == data.sensor){
             serials.some(function(el){
                 if(el.name == element.COM){
-                    if (el.port.isOpen()){
-                        el.port.write('@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
-                        el.port.write('@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#');
+                    if(element.desc.indexOf('ANALOG')>-1){
+                        if (el.port.isOpen()){
+                            el.port.write('@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
+                            el.port.write('@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#');
+                        }
+                        else{
+                            //console.log('culo2');
+                            event.on('setupArduino' + el.name, function(){
+                                setTimeout(function(){
+                                    var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
+                                    //console.log('culo3' + el.name);
+                                    console.log('setting at:' + string);
+                                    el.port.write(string);
+                                }, 500);
+                            });
+                        }
                     }
-                    else{
-                        //console.log('culo2');
-                        event.on('setupArduino' + el.name, function(){
-                            setTimeout(function(){var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
-                                //console.log('culo3' + el.name);
-                                console.log('setting at:' + string);
-                                el.port.write(string);
-                            }, 2000);
-                        });
+                    else if(element.desc.indexOf('DIGITAL') >-1){
+                        if (el.port.isOpen()){
+                            el.port.write('@sde:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
+                        }
+                        else{
+                            //console.log('culo2');
+                            event.on('setupArduino' + el.name, function(){
+                                setTimeout(function(){
+                                    var string = '@sde:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'; //todo : cambiare
+                                    //console.log('culo3' + el.name);
+                                    console.log('setting at:' + string);
+                                    el.port.write(string);
+                                }, 500);
+                            });
+                        }
                     }
+
 
                     return true;
                 }
