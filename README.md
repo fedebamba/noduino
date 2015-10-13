@@ -24,7 +24,7 @@ A simple server in node.js that talks with an Arduino network
     Starts the server, thet begin to emit setup event to configure the network, and listening to other events;
     it is crucial that 'start' is emitted before any other event.
     
-  <b>Event : start {id, value}</b>
+  <b>Event : sense  {id, value}</b>
     Tells the server that the sensor with the specified 'id' has measured 'value'; 
     
   Events the server emits  
