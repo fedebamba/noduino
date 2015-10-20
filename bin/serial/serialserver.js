@@ -164,13 +164,13 @@ function onControl(data){
                     }
                     else if(element.desc.indexOf('DIGITAL') >-1){
                         if (el.port.isOpen()){
-                            el.port.write('@sde:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
+                            el.port.write('@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
                         }
                         else{
                             //console.log('culo2');
                             event.on('setupArduino' + el.name, function(){
                                 setTimeout(function(){
-                                    var string = '@sde:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'; //todo : cambiare
+                                    var string = '@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
                                     console.log('setting at:' + string);
                                     el.port.write(string);
