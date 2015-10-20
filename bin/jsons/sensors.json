@@ -1,22 +1,8 @@
-[
-  {
-    "id": 0,
-    "COM": "COM3",
-    "pin": 0,
-    "name": "analog sensor",
-    "actuators": [
-      6
-
-    ]
-  },
-  {
-    "id": 1,
-    "COM": "COM3",
-    "pin": 1,
-    "name": "analog sensor",
-    "actuators": [
-      6
-    ]
-  }
-
-]
+[{
+  "id": 0,
+  "desc": "DIGITAL",
+  "pin": 7,
+  "name": "sensor",
+  "COM": "COM5",
+  "actuators": [1]
+}]

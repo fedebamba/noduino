@@ -1,7 +1,12 @@
-[
-  [
-    {"id" : "6", "type" : "ACTU", "children" : ["7"]},
-    {"id" : "7", "type" : "BLOC", "parent" : "6" , "children" : ["0"], "function" : "divideByTen"},
-    {"id" : "0" , "type" : "SENS", "parent" : "7"}
-  ]
-]
+[[
+  {
+    "id": 1,
+    "children": [0],
+    "type": "ACTU"
+  },
+  {
+    "id": 0,
+    "children": [],
+    "type": "SENS"
+  }
+]]

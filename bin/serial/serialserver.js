@@ -5,7 +5,7 @@ var SerialPort = serialport.SerialPort;
 var EventEmitter = require('events').EventEmitter;
 
 
-//var arduinoServer = require('../arduinoserver.js').createArduinoServer(false);
+var arduinoServer;
 var event = new EventEmitter();
 
 
@@ -28,8 +28,9 @@ JSON.parse(fs.readFileSync(__dirname + '/../jsons/actuators.json')).forEach(func
 
 var serials = [];
 
-module.exports.start = function(arduinoServer, finisher){
+module.exports.start = function(ardSer, finisher){
     console.log('initializing serial sockets...');
+    arduinoServer = ardSer;
 //retrieving json data
 
 //init serial ports
@@ -55,6 +56,10 @@ module.exports.start = function(arduinoServer, finisher){
     }
 
     var counter = 0;
+
+    arduinoServer.on('control', onControl);
+    arduinoServer.on('setActuator', onSetActuator);
+
     serials.forEach(function(port) {
         port.port.open(function (error) {
             if (error) {
@@ -82,7 +87,10 @@ module.exports.start = function(arduinoServer, finisher){
                             break;
                     }
                 });
-                setTimeout(function(){arduinoServer.emit('setup');}, 500);
+                setTimeout(function(){
+                    console.log('timeout expired');
+                    arduinoServer.emit('setup');
+                }, 1000);
             }
             console.log('t');
             counter++;
@@ -92,10 +100,6 @@ module.exports.start = function(arduinoServer, finisher){
             }
         });
     });
-
-    arduinoServer.on('control', onControl);
-    arduinoServer.on('setActuator', onSetActuator);
-
     console.log('serial sockets initialized');
 };
 
@@ -152,7 +156,7 @@ function onControl(data){
                         }
                         else{
                             //console.log('culo2');
-                            event.on('setupArduino' + el.name, function(){
+                            arduinoServer.on('setup' + el.name, function(){
                                 setTimeout(function(){
                                     var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
@@ -165,18 +169,17 @@ function onControl(data){
                     else if(element.desc.indexOf('DIGITAL') >-1){
                         if (el.port.isOpen()){
                             el.port.write('@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
+                            console.log('setting at:' +  '@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'   );
                         }
-                        else{
-                            //console.log('culo2');
-                            event.on('setupArduino' + el.name, function(){
-                                setTimeout(function(){
-                                    var string = '@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'; //todo : cambiare
-                                    //console.log('culo3' + el.name);
-                                    console.log('setting at:' + string);
-                                    el.port.write(string);
-                                }, 500);
-                            });
-                        }
+                        //console.log('culo2');
+                        arduinoServer.on('setup', function(){
+                            setTimeout(function(){
+                                var string = '@dse:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'; //todo : cambiare
+                                //console.log('culo3' + el.name);
+                                console.log('setting at:  ' + string);
+                                el.port.write(string);
+                            }, 500);
+                        });
                     }
 
 
