@@ -152,13 +152,13 @@ function onControl(data){
                     if(element.desc.indexOf('ANALOG')>-1){
                         if (el.port.isOpen()){
                             el.port.write('@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
-                            el.port.write('@ltr:01#');
+                            el.port.write('@ltr:001#');
                         }
                         else{
                             //console.log('culo2');
                             arduinoServer.on('setup' + el.name, function(){
                                 setTimeout(function(){
-                                    var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#@ltr:01#'; //todo : cambiare
+                                    var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#@ltr:001#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
                                     console.log('setting at:' + string);
                                     el.port.write(string);

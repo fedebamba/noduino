@@ -1,7 +1,7 @@
 [{
   "id": 0,
-  "desc": "DIGITAL",
-  "pin": 7,
+  "desc": "ANALOG",
+  "pin": 1,
   "name": "sensor",
   "COM": "COM3",
   "actuators": [1]

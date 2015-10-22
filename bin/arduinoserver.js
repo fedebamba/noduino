@@ -209,7 +209,7 @@ function treeVisit(node){
         for (var i = 0; i < node.children.length; i++){
             param[i] = treeVisit(node.children[i]);
         }
-        return node.value != undefined ? node.function(param, value) : node.function(param);
+        return node.value != undefined ? node.function(param, node.value) : node.function(param);
     }
     else{
         return node.function(node);

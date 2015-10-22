@@ -1,8 +1,16 @@
 [[
   {
     "id": 1,
-    "children": [0],
+    "children": [2],
     "type": "ACTU"
+  },
+  {
+    "id" : 2,
+    "children" : [0],
+    "type" : "BLOC",
+    "parent" : 1,
+    "function" : "threshold",
+    "value" : 128
   },
   {
     "id": 0,
