@@ -3,6 +3,6 @@
   "desc": "DIGITAL",
   "pin": 7,
   "name": "sensor",
-  "COM": "COM5",
+  "COM": "COM3",
   "actuators": [1]
 }]

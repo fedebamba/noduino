@@ -83,7 +83,7 @@ module.exports.start = function(ardSer, finisher){
                             });
                             break;
                         case 'ack':
-                            console.log('ack vaffanculo');
+                            console.log('ack');
                             break;
                     }
                 });
@@ -152,13 +152,13 @@ function onControl(data){
                     if(element.desc.indexOf('ANALOG')>-1){
                         if (el.port.isOpen()){
                             el.port.write('@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#'); // todo: cambiare
-                            el.port.write('@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#');
+                            el.port.write('@ltr:01#');
                         }
                         else{
                             //console.log('culo2');
                             arduinoServer.on('setup' + el.name, function(){
                                 setTimeout(function(){
-                                    var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#' +'@ttr:' + (element.pin < 10 ? '0' + element.pin : element.pin) + ':01#'; //todo : cambiare
+                                    var string = '@lum:' + (element.pin < 10 ? '0' + element.pin : element.pin) + '#@ltr:01#'; //todo : cambiare
                                     //console.log('culo3' + el.name);
                                     console.log('setting at:' + string);
                                     el.port.write(string);

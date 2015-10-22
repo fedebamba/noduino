@@ -4,5 +4,5 @@
   "desc": "DIGITAL",
   "pin": 13,
   "name": "actuator",
-  "COM": "COM5"
+  "COM": "COM3"
 }]
