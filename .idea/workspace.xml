@@ -65,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/bin/serial/serialserver.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.65405405">
-              <caret line="160" column="116" selection-start-line="160" selection-start-column="116" selection-end-line="160" selection-end-column="116" />
+              <caret line="160" column="123" selection-start-line="160" selection-start-column="123" selection-end-line="160" selection-end-column="123" />
               <folding />
             </state>
           </provider>
@@ -814,7 +814,7 @@
     <entry file="file://$PROJECT_DIR$/bin/serial/serialserver.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65405405">
-          <caret line="160" column="116" selection-start-line="160" selection-start-column="116" selection-end-line="160" selection-end-column="116" />
+          <caret line="160" column="123" selection-start-line="160" selection-start-column="123" selection-end-line="160" selection-end-column="123" />
           <folding />
         </state>
       </provider>
